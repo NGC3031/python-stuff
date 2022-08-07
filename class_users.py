@@ -11,8 +11,11 @@ class User():
         """Display the users name."""
         print(self.first_name.title() +" "+ self.last_name.title())
 
+"""Assuming this would really come from a DB of some sort"""
 user_list =[['bob','smith','1000','26'],['wendy','tan','1001','19']]
-users = [User(first_name=user[0], last_name=user[1], userID=user[2],age=user[3]) for user in user_list]
+
+"""Now just creating multiple objects"""
+users = [User(first_name=user[0], last_name=user[1], userID=user[2], age=user[3]) for user in user_list]
 
 for user in users:
     user.print_name()
