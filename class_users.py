@@ -39,4 +39,8 @@ users = [User(first_name=user['first_name'], last_name=user['last_name'], userID
 
 for user in users:
     user.print_name()
-    
+
+"""Find a user - will update to a method by going to bed"""
+for user in users:
+    if user.first_name=='wendy':
+        print("We have found Wendy")
