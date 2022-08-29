@@ -10,6 +10,7 @@ class NamesTestCase(unittest.TestCase):
     def test_country_city(self):
         ''' Test Sydney Australia '''
         formatted_name = city_function('Sydney', 'Australia')
+        print('----'+formatted_name+'----')
         self.assertEqual(formatted_name, 'Sydney, Australia')
 
 
