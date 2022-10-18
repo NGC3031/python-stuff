@@ -5,16 +5,16 @@ class Account:
     def __init__(self, name, acNumber):
         self.name = name
         self.acNumber = acNumber
-        self.bl = 20
+        self.bl = 100
 
     def credit(self, cr):
-        self.bl = self.bl-cr
+        self.bl = self.bl+cr
         cr = "${:,.2f}".format(cr)
         print(self.acNumber, "----")
         print("DR: -", cr)
 
     def debit(self, dr):
-        self.bl = self.bl+dr
+        self.bl = self.bl-dr
         dr = "${:,.2f}".format(dr)
         print(self.acNumber, "----")
         print("CR: ", dr)
@@ -27,21 +27,24 @@ p4 = Account("RM", "45511223354689")
 
 
 def deposit(dr, am):
-    p1.credit(am)
-    dr.debit(am)
+    if dr.bl >= 0:
+        p1.credit(am)
+        dr.debit(am)
 
 
 def withdrawal(cr, am):
-    p1.debit(am)
-    cr.debit(am)
+    if cr.bl >= 0:
+        cr.credit(am)
+        p1.debit(am)
 
 
 def transfer(cr, dr, am):
-    cr.credit(am)
-    dr.debit(am)
+    if dr.bl >= 0:
+        cr.credit(am)
+        dr.debit(am)
 
 
-for x in range(20000):
+for x in range(150):
     r = random.randrange(1, 5)
     if r == 1:
         a = p1
@@ -63,13 +66,20 @@ for x in range(20000):
         b = p4
 
     r = random.randrange(1, 4)
-    am = random.randrange(0, 100)
     if r == 1:
-        transfer(a, b, am)
+        if a.bl >= 0 and p1.bl >= 0:
+            am = random.randrange(0, a.bl)
+            transfer(a, b, am)
     if r == 2:
-        deposit(a, am)
-    if r == 2:
-        withdrawal(a, am)
+        if b.bl >= 1:
+            # if p1.bl >= 0:
+            am = random.randrange(0, b.bl)
+            deposit(b, am)
+    if r == 3:
+        if b.bl >= 0:
+            # if p1.bl >= 0:
+            am = random.randrange(0, b.bl)
+            withdrawal(b, am)
     print("ACC:", a.acNumber, " Balance: ", "${:,.2f}".format(a.bl))
     print("ACC:", b.acNumber, " Balance: ", "${:,.2f}".format(b.bl))
     print("--------------------------------------------------------------------------------------------------------------------------------------------------------------------")
